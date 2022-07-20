@@ -1,0 +1,74 @@
+{
+  "language": "jq",
+  "slug": "jq",
+  "active": false,
+  "status": {
+    "concept_exercises": false,
+    "test_runner": true,
+    "representer": false,
+    "analyzer": false
+  },
+  "blurb": "jq is a lightweight and flexible command-line JSON processor",
+  "version": 3,
+  "online_editor": {
+    "indent_style": "space",
+    "indent_size": 4,
+    "highlightjs_language": "jq"
+  },
+  "test_runner": {
+    "average_run_time": 2.0
+  },
+  "files": {
+    "solution": [
+      "%{snake_slug}.jq"
+    ],
+    "test": [
+      "%{snake_slug}.bats"
+    ],
+    "example": [
+      ".meta/example.jq"
+    ],
+    "exemplar": [
+      ".meta/exemplar.jq"
+    ]
+  },
+  "exercises": {
+    "concept": [],
+    "practice": [
+      {
+        "slug": "hello-world",
+        "name": "Hello World",
+        "uuid": "4e2533dd-3af5-400b-869d-78140764d533",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 1,
+        "topics": [
+          "strings"
+        ]
+      },
+      {
+        "slug": "two-fer",
+        "name": "Two Fer",
+        "uuid": "0cfac255-6871-4588-a16b-98f7692bfdbe",
+        "practices": [],
+        "prerequisites": [],
+        "difficulty": 1,
+        "topics": [
+          "control_flow_conditionals",
+          "strings",
+          "text_formatting"
+        ]
+      }
+    ]
+  },
+  "concepts": [],
+  "key_features": [],
+  "tags": [
+    "used_for/scripts",
+    "used_for/backends",
+    "paradigm/functional",
+    "platform/linux",
+    "platform/mac",
+    "platform/windows"
+  ]
+}

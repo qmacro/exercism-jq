@@ -1,0 +1,19 @@
+{
+  "authors": [
+    "qmacro"
+  ],
+  "contributors": [],
+  "files": {
+    "solution": [
+      "summary_extract.jq"
+    ],
+    "test": [
+      "summary_extract.bats"
+    ],
+    "example": [
+      "example.jq"
+    ]
+  },
+  "blurb": "Extract a value for every entry in an object into a CSV list",
+  "source_url": "https://stackoverflow.com/questions/72994933/json-selector-for-jq"
+}

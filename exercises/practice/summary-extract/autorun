@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+declare exercise="${PWD##*/}"
+exercise="${exercise//-/_}"
+find $exercise* | BATS_RUN_SKIPPED="$BATS_RUN_SKIPPED" entr -c bats "$exercise.bats"

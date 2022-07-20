@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+declare exercise="${PWD##*/}"
+exercise="${exercise//-/_}"
+find $exercise* | entr -c bats "$exercise.bats"

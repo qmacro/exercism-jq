@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+#
+# For a given exercise, validate the tests.
+# The directory of the exercise to be tested is passed as $1
+
+set -o errexit
+set -o nounset
+
+die() { echo "$*" >&2; exit 1; }
+
+cd "$1" || die "Cannot cd to $1"
+
+config=./.meta/config.json
+[[ -f ${config} ]] || die "no $config file: you're in the wrong directory"
+
+exercise=${1%/}                 # strip a trailing slash, if there is one
+exercise=${exercise##*/}        # remove any leading path
+
+stub=$(jq -r '.files.solution[0]' "$config")
+[[ -f ${stub} ]] || die "Missing stub file for $exercise"
+
+tests=$(jq -r '.files.test[0]' "$config")
+[[ -f ${tests} ]] || die "Missing tests file for $exercise"
+
+solution=$(jq -r '.files.example[0]' "$config")
+[[ -f ${solution} ]] || die "Missing solution file for $exercise"
+
+# Ensure each exercise has the expected number of commented-out skip lines
+case ${exercise} in
+    hello-world)         expected=0 ;;
+    pythagorean-triplet) expected=2 ;;
+    *)                   expected=1 ;;
+esac
+# a PCRE: the `\Q...\E` defines a literal segment
+skip_re='^\s*#+\s*\Q[[ $BATS_RUN_SKIPPED == "true" ]] || skip\E$'
+num_skip_comments=$(grep -cP "${skip_re}" "${tests}") || true
+(( num_skip_comments == expected )) || die "There should be exactly $expected commented skip directive in ${tests}"
+
+echo "Processing $exercise"
+
+cleanup() {
+    git checkout "${stub}"
+}
+trap cleanup EXIT
+
+# Create implementation file from example
+cp "${solution}" "${stub}"
+
+# Run the tests
+BATS_RUN_SKIPPED=true bats "${tests}"
