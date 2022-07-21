@@ -1,3 +1,3 @@
 #!/usr/bin/env jq
 
-"Hello, World!"
+.locales|to_entries[]|[.key, .value.validHrs]|@csv
