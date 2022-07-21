@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+# Simple auto-runner for an exercise, designed to be run from within
+# the root of this repo (i.e. bin/autorun <exercise-name>).
+
+declare exercise="${1?Specify exercise name}"
+declare location="exercises/practice"
+
+cd "$location/$exercise" || {
+  echo "Cannot find practice exercise $1"
+  exit 1
+}
+
+# Seems like the tradition is kebab-case for exercise dirs
+# but snake-case for files within.
+exercise="${exercise//-/_}"
+
+# Run the tests every time any exercise related file changes
+find $exercise* | BATS_RUN_SKIPPED=$BATS_RUN_SKIPPED entr -c bats "$exercise.bats"
